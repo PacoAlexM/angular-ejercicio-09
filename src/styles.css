@@ -2,4 +2,21 @@
 @plugin "daisyui" {
     themes: business --default;
 }
-
+@theme {
+    --font-montserrat: "Monserrat", "sans-serif";
+}
+@font-face {
+    font-family: "Monserrat";
+    src: url("/assets/fonts/montserrat/montserrat-alternates-medium.ttf") format("truetype");
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.animate-fadein {
+    animation: fadeIn 0.3s ease-in-out;
+}

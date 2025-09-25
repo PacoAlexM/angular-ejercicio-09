@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ProductCardComponent } from '@products/components/product-card/product-card.component';
 import { ProductsService } from '@products/services/products.service';
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -13,7 +13,9 @@ export class HomePageComponent {
     productsResource = rxResource({
         params: () => ({}),
         stream: ({ params }) => {
-            return this.productsService.getProducts();
+            return this.productsService.getProducts({});
         },
     });
 }
+
+// http://localhost:3000/api/files/product/1740245-00-A_0_2000.jpg

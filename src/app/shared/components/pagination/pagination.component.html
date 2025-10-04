@@ -1,5 +1,5 @@
 <div class="join flex justify-center items-center mt-4 mb-10">
     @for (page of getPagesArray(); track page) {
-        <button [class.btn-primary]="page === currentPage()" class="join-item btn">{{ page }}</button>
+        <button [routerLink]="[]" [queryParams]="{ page: page }" [class.btn-primary]="page === activePage()" class="join-item btn" (click)="activePage.set(page)">{{ page }}</button>
     }
 </div>

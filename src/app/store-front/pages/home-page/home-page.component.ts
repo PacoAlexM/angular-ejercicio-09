@@ -1,8 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ProductCardComponent } from '@products/components/product-card/product-card.component';
 import { ProductsService } from '@products/services/products.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { PaginationComponent } from '@shared/components/pagination/pagination.component';
+import { PaginationService } from '@shared/components/pagination/pagination.service';
 
 @Component({
     selector: 'home-page',
@@ -11,10 +12,19 @@ import { PaginationComponent } from '@shared/components/pagination/pagination.co
 })
 export class HomePageComponent {
     productsService = inject(ProductsService);
+    paginationService = inject(PaginationService);
+
+    // activatedRoute = inject(ActivatedRoute);
+    // 
+    // currenPage = toSignal(this.activatedRoute.queryParamMap.pipe(
+    //     map(param => (param.get('page') ? +param.get('page')! : 1)),
+    //     map(page => (isNaN(page) ? 1 : page))
+    // ), { initialValue: 1, });
+
     productsResource = rxResource({
-        params: () => ({}),
-        stream: ({ params }) => {
-            return this.productsService.getProducts({});
+        params: () => this.paginationService.currenPage() - 1,
+        stream: ({ params: currenPage }) => {
+            return this.productsService.getProducts({ offset: currenPage * 9 });
         },
     });
 }

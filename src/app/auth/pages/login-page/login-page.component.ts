@@ -43,10 +43,16 @@ export class LoginPageComponent {
             }
 
             this.hasError.set(true);
-            
+
             setTimeout(() => {
                 this.hasError.set(false);
             }, 2000);
         });
     }
+
+    // Checar la autenticacion
+
+    // Registro
+
+    // Cerrar sesion
 }

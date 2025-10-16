@@ -15,7 +15,7 @@ const baseUrl = environment.baseUrl;
 export class AuthService {
     private _authStatus = signal<AuthStatus>('checking');
     private _user = signal<User|null>(null);
-    private _token = signal<string|null>(null);
+    private _token = signal<string|null>(localStorage.getItem('token'));
 
     private http = inject(HttpClient);
 
@@ -66,9 +66,9 @@ export class AuthService {
         }
 
         return this.http.get<AuthResponse>(`${baseUrl}/auth/check-status`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
+            // headers: {
+            //     Authorization: `Bearer ${token}`,
+            // }
         }).pipe(
             map(res => this.handleAuthSuccess(res)),
             catchError((error: any) => this.handleAuthError(error))
@@ -80,6 +80,6 @@ export class AuthService {
         this._token.set(null);
         this._authStatus.set('non-authenticated');
 
-        localStorage.removeItem('token');
+        // localStorage.removeItem('token');
     }
 }

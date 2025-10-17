@@ -49,10 +49,4 @@ export class LoginPageComponent {
             }, 2000);
         });
     }
-
-    // Checar la autenticacion
-
-    // Registro
-
-    // Cerrar sesion
 }

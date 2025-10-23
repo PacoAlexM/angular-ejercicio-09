@@ -35,6 +35,8 @@ export class AuthService {
 
     token = computed(this._token);
 
+    isAdmin = computed(() => this._user()?.roles.includes('admin') ?? false);
+
     private handleAuthSuccess ({ token, user }: AuthResponse) {
         this._user.set(user);
         this._authStatus.set('authenticated');

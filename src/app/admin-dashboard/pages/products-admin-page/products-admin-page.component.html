@@ -3,4 +3,6 @@
 
 <div class="divider"></div>
 
-<products-table [products]="[]" />
+<app-pagination [currentPage]="paginationService.currenPage()" [pages]="productsResource.value()?.pages ?? 0" />
+
+<products-table [products]="productsResource.value()?.products ?? []" />

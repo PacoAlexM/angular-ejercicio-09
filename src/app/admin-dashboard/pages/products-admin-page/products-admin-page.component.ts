@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ProductsTableComponent } from "@products/components/products-table/products-table.component";
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ProductsService } from '@products/services/products.service';
@@ -14,10 +14,12 @@ export class ProductsAdminPageComponent {
     productsService = inject(ProductsService);
     paginationService = inject(PaginationService);
 
+    productsPerPage = signal(10);
+
     productsResource = rxResource({
-        params: () => this.paginationService.currenPage() - 1,
-        stream: ({ params: currenPage }) => {
-            return this.productsService.getProducts({ offset: currenPage * 9 });
+        params: () => ({ page: this.paginationService.currenPage() - 1, limit: this.productsPerPage() }),
+        stream: ({ params }) => {
+            return this.productsService.getProducts({ offset: params.page * 9, limit: params.limit });
         },
     });
 }

@@ -17,7 +17,10 @@ export class ProductsAdminPageComponent {
     productsPerPage = signal(10);
 
     productsResource = rxResource({
-        params: () => ({ page: this.paginationService.currenPage() - 1, limit: this.productsPerPage() }),
+        params: () => ({
+            page: this.paginationService.currenPage() - 1,
+            limit: this.productsPerPage()
+        }),
         stream: ({ params }) => {
             return this.productsService.getProducts({ offset: params.page * 9, limit: params.limit });
         },

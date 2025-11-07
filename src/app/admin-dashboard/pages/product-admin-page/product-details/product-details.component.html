@@ -7,27 +7,39 @@
     <div class="flex flex-col gap-2">
         <h2 class="text-2xl font-bold h-12">Datos generales</h2>
 
-        <input type="text" class="input input-bordered w-full" placeholder="Título" formControlName="title" />
-        <input type="text" class="input input-bordered w-full" placeholder="Slug" formControlName="slug" />
-        <textarea class="textarea textarea-bordered" placeholder="Descripción" rows="6" formControlName="description"></textarea>
+        <input type="text" class="input input-bordered w-full" [class.border-red-500]="productForm.get('title')?.errors ?? false" placeholder="Título" formControlName="title" />
+        <form-error-label [control]="productForm.get('title')!" />
+
+        <input type="text" class="input input-bordered w-full" [class.border-red-500]="productForm.get('slug')?.errors ?? false" placeholder="Slug" formControlName="slug" />
+        <form-error-label [control]="productForm.get('slug')!" />
+
+        <textarea class="textarea textarea-bordered w-full" [class.border-red-500]="productForm.get('description')?.errors ?? false" placeholder="Descripción" rows="6" formControlName="description"></textarea>
+        <form-error-label [control]="productForm.get('description')!" />
 
         <h2 class="text-lg font-bold">Datos de venta</h2>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <input type="number" class="input input-bordered w-full" placeholder="Precio" formControlName="price" />
-            <input type="number" class="input input-bordered w-full" placeholder="Inventario" formControlName="stock" />
+            <div>
+                <input type="number" class="input input-bordered w-full" [class.border-red-500]="productForm.get('price')?.errors ?? false" placeholder="Precio" formControlName="price" />
+                <form-error-label [control]="productForm.get('price')!" />
+            </div>
+            <div>
+                <input type="number" class="input input-bordered w-full" [class.border-red-500]="productForm.get('stock')?.errors ?? false" placeholder="Inventario" formControlName="stock" />
+                <form-error-label [control]="productForm.get('stock')!" />
+            </div>
         </div>
 
         <!-- tags -->
-        <input type="text" class="input input-bordered w-full" placeholder="Tags" formControlName="tags" />
+        <input type="text" class="input input-bordered w-full" [class.border-red-500]="productForm.get('tags')?.errors ?? false" placeholder="Tags" formControlName="tags" />
+        <form-error-label [control]="productForm.get('tags')!" />
 
         <!-- Botones para el género -->
         <div class="grid grid-cols-4 gap-2">
             <!-- <button type="button" class="btn btn-sm btn-outline">Masculino</button> -->
-            <button type="button" class="btn btn-sm btn-primary">Masculino</button>
-            <button type="button" class="btn btn-sm btn-accent">Femenino</button>
-            <button type="button" class="btn btn-sm btn-warning">Kids</button>
-            <button type="button" class="btn btn-sm btn-secondary">Unisex</button>
+            <button type="button" class="btn btn-sm" [class.btn-primary]="productForm.value.gender === 'men'" (click)="productForm.patchValue({ gender: 'men' })">Masculino</button>
+            <button type="button" class="btn btn-sm" [class.btn-accent]="productForm.value.gender === 'women'" (click)="productForm.patchValue({ gender: 'women' })">Femenino</button>
+            <button type="button" class="btn btn-sm" [class.btn-warning]="productForm.value.gender === 'kid'" (click)="productForm.patchValue({ gender: 'kid' })">Kids</button>
+            <button type="button" class="btn btn-sm" [class.btn-secondary]="productForm.value.gender === 'unisex'" (click)="productForm.patchValue({ gender: 'unisex' })">Unisex</button>
         </div>
 
         <!--
@@ -41,7 +53,7 @@
         <!-- Sizes -->
         <div class="grid grid-cols-6 gap-2">
             @for (size of sizes; track size) {
-                <button type="button" class="btn btn-sm btn-outline">{{ size }}</button>
+                <button type="button" class="btn btn-sm" [class.btn-secondary]="productForm.value.sizes?.includes(size)" (click)="onSizeChange(size)">{{ size }}</button>
             }
         </div>
     </div>

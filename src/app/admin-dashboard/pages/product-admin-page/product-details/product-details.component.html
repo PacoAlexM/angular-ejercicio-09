@@ -69,6 +69,18 @@
 
         <product-carousel [images]="product().images" />
 
-        <input type="file" class="file-input file-input-bordered w-full mt-4" />
+        <input type="file" class="file-input w-full mt-4" accept="image/*" multiple (change)="onFilesChanged($event)" />
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+            @for (image of tempImgs(); track image) {
+                <img [src]="image" alt="Temp image" class="w-full object-cover rounded-xl" />
+            }
+        </div>
     </div>
 </form>
+
+@if (wasSaved()) {
+    <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadein">
+        <span>Datos actualizados correctamente</span>
+    </div>
+}

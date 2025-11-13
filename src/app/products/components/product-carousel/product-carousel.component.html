@@ -5,6 +5,9 @@
                 <img [src]="image | productImage" alt="product-image" class="w-full object-cover animate-fadein" />
             </div>
         }
+        @empty {
+            <img [src]="null | productImage" alt="product-image" class="w-full object-cover animate-fadein" />
+        }
     </div>
 
     <div class="swiper-pagination"></div>

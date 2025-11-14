@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductCarouselComponent } from '@products/components/product-carousel/product-carousel.component';
@@ -22,6 +22,7 @@ export class ProductDetailsComponent implements OnInit {
 
     wasSaved = signal(false);
     tempImgs = signal<string[]>([]);
+    imageFileList: FileList | undefined = undefined;
 
     productForm = this.fb.group({
         title: ['', [Validators.required]],
@@ -36,6 +37,12 @@ export class ProductDetailsComponent implements OnInit {
     });
 
     sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+    imagesToCarousel = computed(() => {
+        const currentImages = [ ...this.product().images, ...this.tempImgs() ];
+
+        return currentImages;
+    });
 
     ngOnInit(): void {
         this.setFormValue(this.product());
@@ -102,6 +109,7 @@ export class ProductDetailsComponent implements OnInit {
     onFilesChanged(event: Event) {
         const fileList = (event.target as HTMLInputElement).files;
 
+        this.imageFileList = fileList ?? undefined;
         this.tempImgs.set([]);
 
         const imageUrls = Array.from(fileList ?? []).map(file => (URL.createObjectURL(file)));

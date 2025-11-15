@@ -73,7 +73,7 @@ export class ProductDetailsComponent implements OnInit {
         };
 
         if (this.product().id === 'new') {
-            const product = await firstValueFrom(this.productService.createProduct(productLike));
+            const product = await firstValueFrom(this.productService.createProduct(productLike, this.imageFileList));
 
             console.log('Producto creado');
 
@@ -86,7 +86,7 @@ export class ProductDetailsComponent implements OnInit {
             //     // this.wasSaved.set(true);
             // });
         } else {
-            await firstValueFrom(this.productService.updateProduct(this.product().id, productLike));
+            await firstValueFrom(this.productService.updateProduct(this.product().id, productLike, this.imageFileList));
 
             // this.productService.updateProduct(this.product().id, productLike).subscribe(product => { console.log('Producto actualizado') });
         }
